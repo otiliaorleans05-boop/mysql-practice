@@ -1,0 +1,13 @@
+-- 1. Truy vấn kiểm tra khi chưa có index
+EXPLAIN SELECT * FROM customers WHERE customerName = 'Land of Toys Inc.';
+
+-- 2. Thêm index cho cột customerName và kiểm tra lại
+ALTER TABLE customers ADD INDEX idx_customerName(customerName);
+EXPLAIN SELECT * FROM customers WHERE customerName = 'Land of Toys Inc.';
+
+-- 3. Thêm composite index (chỉ mục kết hợp) và kiểm tra
+ALTER TABLE customers ADD INDEX idx_full_name(contactFirstName, contactLastName);
+EXPLAIN SELECT * FROM customers WHERE contactFirstName = 'Jean' OR contactFirstName = 'King';
+
+-- 4. Xóa index
+ALTER TABLE customers DROP INDEX idx_full_name;
